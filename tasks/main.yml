@@ -1,0 +1,52 @@
+---
+# tasks file for roles/ansible-role-novnc-install
+- name: Update variables
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: Update system packages
+  apt:
+    name: "{{ item }}"
+    install_recommends: no
+    state: present
+    update_cache: yes
+  with_items:
+  - "{{ os_packages }}"
+  when: ansible_os_family == "Debian"
+
+- name: Download noVNC
+  git:
+    repo: "{{ novnc_git }}"
+    dest: "{{ novnc_folder }}"
+    accept_hostkey: True
+
+- name: Validate that index.html is available for novnc
+  stat:
+    path: "{{ novnc_folder }}/index.html"
+  register: novnc_index
+
+- name: Update with link for index.html if not available
+  file:
+    src: "{{ novnc_folder }}/vnc.html"
+    dest: "{{ novnc_folder }}/index.html"
+    state: link
+  when: novnc_index.stat.exists == false
+
+- name: Create folders for file copies
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - /etc/supervisor/conf.d
+  - /etc/nginx/sites-available
+
+- name: Configure servers
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+  - { src: 'supervisord.conf.j2', dest: '/etc/supervisor/supervisord.conf'}
+  - { src: 'novnc-supervisord.conf.j2', dest: "/etc/supervisor/conf.d/novnc.conf"}
+  - { src: "nginx-novnc-proxy.conf.j2", dest: "/etc/nginx/sites-available/novnc-proxy"}
+  notify:
+  - "Restart Supervisor & Nginx"
+

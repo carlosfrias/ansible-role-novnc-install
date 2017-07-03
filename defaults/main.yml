@@ -1,0 +1,4 @@
+---
+# defaults file for roles/ansible-role-novnc-install
+novnc_folder: "/opt/noVNC"
+novnc_git: "https://github.com/carlosfrias/noVNC.git"

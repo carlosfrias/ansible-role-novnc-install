@@ -1,0 +1,12 @@
+[program:novnc]
+priority=25
+directory={{  novnc_folder }}
+command={{ novnc_folder }}/utils/launch.sh --listen {{ novnc_port | default(6080) }} --vnc localhost:{{ vnc_port | default(5901) }} --cert {{ nginx_ssl_certificate_key }}
+user=root
+autostart=true
+autorestart=true
+stopsignal=QUIT
+stdout_logfile=/var/log/novnc.log
+redirect_stderr=true
+stopasgroup=true
+

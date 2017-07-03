@@ -1,0 +1,7 @@
+---
+# vars file for roles/ansible-role-novnc-install
+
+os_packages:
+- python-pip
+- supervisor
+- git

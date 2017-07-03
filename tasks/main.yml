@@ -39,6 +39,17 @@
   - /etc/supervisor/conf.d
   - /etc/nginx/sites-available
 
+- name: Add novnc nginx site
+  file:
+    dest: /etc/nginx/sites-enabled/novnc-proxy
+    src: /etc/nginx/sites-available/novnc-proxy
+    state: link
+
+- name: Remove default nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  
 - name: Configure servers
   template:
     src: "{{ item.src }}"

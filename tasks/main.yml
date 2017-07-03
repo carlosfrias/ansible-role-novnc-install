@@ -39,6 +39,15 @@
   - /etc/supervisor/conf.d
   - /etc/nginx/sites-available
 
+- name: Configure servers
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+  - { src: 'supervisord.conf.j2', dest: '/etc/supervisor/supervisord.conf'}
+  - { src: 'novnc-supervisord.conf.j2', dest: "/etc/supervisor/conf.d/novnc.conf"}
+  - { src: "nginx-novnc-proxy.conf.j2", dest: "/etc/nginx/sites-available/novnc-proxy"}
+
 - name: Add novnc nginx site
   file:
     dest: /etc/nginx/sites-enabled/novnc-proxy
@@ -49,15 +58,6 @@
   file:
     path: /etc/nginx/sites-enabled/default
     state: absent
-  
-- name: Configure servers
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-  with_items:
-  - { src: 'supervisord.conf.j2', dest: '/etc/supervisor/supervisord.conf'}
-  - { src: 'novnc-supervisord.conf.j2', dest: "/etc/supervisor/conf.d/novnc.conf"}
-  - { src: "nginx-novnc-proxy.conf.j2", dest: "/etc/nginx/sites-available/novnc-proxy"}
   notify:
   - "Restart Supervisor & Nginx"
 

@@ -22,7 +22,7 @@
 - name: Set noVNC folder permissions
   file:
     path: "{{ novnc_folder }}"
-    status: touch
+    state: touch
     owner: "{{ username }}"
     group: "{{ username }}"
 

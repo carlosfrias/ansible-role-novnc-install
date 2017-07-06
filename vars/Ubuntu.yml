@@ -3,5 +3,7 @@
 
 os_packages:
 - python-pip
+- python-dev
 - supervisor
 - git
+- gcc

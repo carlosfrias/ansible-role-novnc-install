@@ -15,8 +15,10 @@
 
 - name: Update pip packages
   pip:
-    name: numpy
+    name: "{{ item }}"
     state: present
+  with_items:
+  - "{{ pip_packages }}"
 
 - name: Download noVNC
   git:

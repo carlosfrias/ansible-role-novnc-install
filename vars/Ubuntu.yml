@@ -7,3 +7,6 @@ os_packages:
 - supervisor
 - git
 - gcc
+
+pip_packages:
+- numpy

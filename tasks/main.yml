@@ -13,6 +13,11 @@
   - "{{ os_packages }}"
   when: ansible_os_family == "Debian"
 
+- name: Update pip packages
+  pip:
+    name: numpy
+    state: present
+
 - name: Download noVNC
   git:
     repo: "{{ novnc_git }}"

@@ -10,3 +10,8 @@ os_packages:
 
 pip_packages:
 - numpy
+
+template_files:
+- { src: 'supervisord.conf.j2', dest: '/etc/supervisor/supervisord.conf'}
+- { src: 'novnc-supervisord.conf.j2', dest: "/etc/supervisor/conf.d/novnc.conf"}
+- { src: "nginx-novnc-proxy.conf.j2", dest: "/etc/nginx/sites-available/novnc-proxy"}

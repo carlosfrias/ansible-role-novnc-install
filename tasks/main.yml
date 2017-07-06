@@ -53,14 +53,19 @@
   - /etc/supervisor/conf.d
   - /etc/nginx/sites-available
 
+- name: Setup target folders
+  file:
+    path: "{{ item.dest | dirname }}"
+    state: directory
+  with_items:
+  - "{{ template_files }}"
+
 - name: Configure servers
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-  - { src: 'supervisord.conf.j2', dest: '/etc/supervisor/supervisord.conf'}
-  - { src: 'novnc-supervisord.conf.j2', dest: "/etc/supervisor/conf.d/novnc.conf"}
-  - { src: "nginx-novnc-proxy.conf.j2", dest: "/etc/nginx/sites-available/novnc-proxy"}
+  - "{{ template_files }}"
 
 - name: Add novnc nginx site
   file:

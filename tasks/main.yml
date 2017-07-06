@@ -19,6 +19,12 @@
     dest: "{{ novnc_folder }}"
     accept_hostkey: True
 
+- name: Set noVNC folder permissions
+  file:
+    path: "{{ novnc_folder }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
 - name: Validate that index.html is available for novnc
   stat:
     path: "{{ novnc_folder }}/index.html"

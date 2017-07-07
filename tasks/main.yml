@@ -79,5 +79,3 @@
     state: absent
   notify:
   - "Restart Supervisor & Nginx"
-  - "Restart Supervisor & Nginx"
-

@@ -2,7 +2,7 @@ server {
 	listen 80 default_server;
     listen 443 ssl;
 
-	root /noVNC;
+	root {{ novnc_folder }};
 	index vnc.html vnc_lite.html index.html;
 
     ssl on;

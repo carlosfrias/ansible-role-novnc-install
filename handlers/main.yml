@@ -1,10 +1,7 @@
 ---
 # handlers file for roles/ansible-role-novnc-install
-- name: Restart Supervisor & Nginx
+- name: Start Supervisor
   service:
-    name: "{{ item }}"
-    state: restarted
+    name: supervisor
+    state: started
     enabled: yes
-  with_items:
-  - supervisor
-  - nginx

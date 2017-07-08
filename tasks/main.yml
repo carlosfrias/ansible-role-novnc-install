@@ -78,5 +78,4 @@
     path: /etc/nginx/sites-enabled/default
     state: absent
   notify:
-  - "Restart Supervisor & Nginx"
-  - "Restart Supervisor & Nginx"
+  - "Start Supervisor"

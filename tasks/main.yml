@@ -77,16 +77,5 @@
   file:
     path: /etc/nginx/sites-enabled/default
     state: absent
-
-- block:
-  - name: Start Supervisor
-    service:
-      name: supervisor
-      state: restarted
-      enabled: yes
-  rescue:
-    - name: Start Supervisor
-      service:
-        name: supervisor
-        state: restarted
-        enabled: yes
+  notify:
+  - "Start Supervisor"
